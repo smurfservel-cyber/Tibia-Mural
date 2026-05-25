@@ -1,1 +1,373 @@
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tibia Mural</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #070b10;
+      color: #f9fafb;
+    }
+
+    header {
+      padding: 34px 18px;
+      text-align: center;
+      background: radial-gradient(circle at top, #1f2937, #070b10 70%);
+      border-bottom: 1px solid #2f3b4a;
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: 900;
+      color: #f59e0b;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #d1d5db;
+      font-size: 15px;
+      max-width: 760px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: 24px auto 0;
+      padding: 0 16px;
+    }
+
+    .hero-box {
+      background: linear-gradient(135deg, #111827, #0f172a);
+      border: 1px solid #374151;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    .hero-box h1 {
+      margin: 0 0 10px;
+      font-size: 28px;
+      color: #fff;
+    }
+
+    .hero-box p {
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin: 0 0 16px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 12px 15px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      background: #16a34a;
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #1f2937;
+      color: #fbbf24;
+      border: 1px solid #374151;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px 16px 40px;
+    }
+
+    .status-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    .status-card {
+      background: #0f172a;
+      border: 1px solid #1f2937;
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .status-card strong {
+      display: block;
+      color: #f59e0b;
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    .status-card span {
+      color: #9ca3af;
+      font-size: 13px;
+    }
+
+    .section-title {
+      margin: 30px 0 14px;
+      font-size: 22px;
+      color: #fbbf24;
+    }
+
+    .notice {
+      background: #1f2937;
+      border-left: 4px solid #f59e0b;
+      color: #e5e7eb;
+      padding: 13px;
+      border-radius: 10px;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: #111827;
+      border: 1px solid #374151;
+      border-radius: 16px;
+      padding: 17px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #f59e0b, #22c55e);
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .tag-sale {
+      background: #3b2206;
+      color: #fbbf24;
+    }
+
+    .tag-buy {
+      background: #052e1a;
+      color: #86efac;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 19px;
+    }
+
+    .info {
+      color: #d1d5db;
+      margin: 7px 0;
+      font-size: 14px;
+    }
+
+    .price {
+      margin: 12px 0 4px;
+      color: #22c55e;
+      font-size: 23px;
+      font-weight: 900;
+    }
+
+    .small {
+      color: #9ca3af;
+      font-size: 12px;
+      margin-top: 6px;
+    }
+
+    .contact {
+      display: block;
+      margin-top: 13px;
+      text-align: center;
+      background: #16a34a;
+      color: white;
+      text-decoration: none;
+      padding: 11px;
+      border-radius: 10px;
+      font-weight: 900;
+    }
+
+    .empty {
+      background: #0f172a;
+      border: 1px dashed #374151;
+      color: #9ca3af;
+      border-radius: 14px;
+      padding: 18px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    footer {
+      border-top: 1px solid #1f2937;
+      text-align: center;
+      color: #9ca3af;
+      padding: 25px 15px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 520px) {
+      .logo {
+        font-size: 29px;
+      }
+
+      .hero-box h1 {
+        font-size: 23px;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Tibia Mural</div>
+    <p class="subtitle">
+      Mural brasileiro para compra e venda de Tibia Coins, com vendas aprovadas manualmente e ofertas de compra atualizadas diariamente.
+    </p>
+  </header>
+
+  <section class="hero">
+    <div class="hero-box">
+      <h1>Encontre ofertas de TC de forma rápida</h1>
+      <p>
+        Aqui você poderá visualizar anúncios de venda aprovados, ofertas de compra ativas e contatos dos anunciantes. O sistema está sendo preparado para funcionar junto com uma planilha de controle.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#vendas">Ver vendas aprovadas</a>
+        <a class="btn btn-secondary" href="#compras">Ver ofertas de compra</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+
+    <div class="status-bar">
+      <div class="status-card">
+        <strong>Manual</strong>
+        <span>Vendas só aparecem após aprovação.</span>
+      </div>
+
+      <div class="status-card">
+        <strong>24h</strong>
+        <span>Ofertas de compra atualizadas diariamente.</span>
+      </div>
+
+      <div class="status-card">
+        <strong>Contato</strong>
+        <span>Anunciante poderá exibir WhatsApp ou outro contato.</span>
+      </div>
+    </div>
+
+    <section id="vendas">
+      <h2 class="section-title">Vendas de TC Aprovadas</h2>
+
+      <div class="notice">
+        Os anúncios de venda abaixo são exemplos. Depois vamos conectar essa área com a aba de vendas aprovadas da planilha.
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <span class="tag tag-sale">Venda aprovada</span>
+          <h3>Servel</h3>
+          <p class="info">Servidor: Kalibra</p>
+          <p class="info">Quantidade: 250 TC</p>
+          <p class="info">Tipo de contato: WhatsApp</p>
+          <div class="price">R$ 52,00</div>
+          <p class="small">Anúncio exibido somente após aprovação.</p>
+          <a class="contact" href="#">Chamar anunciante</a>
+        </div>
+
+        <div class="card">
+          <span class="tag tag-sale">Venda aprovada</span>
+          <h3>Player Exemplo</h3>
+          <p class="info">Servidor: Gentebra</p>
+          <p class="info">Quantidade: 500 TC</p>
+          <p class="info">Tipo de contato: WhatsApp</p>
+          <div class="price">R$ 104,00</div>
+          <p class="small">Modelo visual para anúncio aprovado.</p>
+          <a class="contact" href="#">Chamar anunciante</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="compras">
+      <h2 class="section-title">Ofertas de Compra</h2>
+
+      <div class="notice">
+        As ofertas de compra serão configuradas para atualizar a cada 24 horas quando conectarmos a planilha.
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <span class="tag tag-buy">Compra ativa</span>
+          <h3>Comprador Exemplo</h3>
+          <p class="info">Servidor: Kalibra</p>
+          <p class="info">Procura: 250 TC</p>
+          <p class="info">Tipo de contato: WhatsApp</p>
+          <div class="price">R$ 50,00</div>
+          <p class="small">Oferta atualizada diariamente.</p>
+          <a class="contact" href="#">Chamar comprador</a>
+        </div>
+
+        <div class="card">
+          <span class="tag tag-buy">Compra ativa</span>
+          <h3>Comprador 02</h3>
+          <p class="info">Servidor: Quelibra</p>
+          <p class="info">Procura: 1000 TC</p>
+          <p class="info">Tipo de contato: WhatsApp</p>
+          <div class="price">R$ 200,00</div>
+          <p class="small">Modelo visual para oferta de compra.</p>
+          <a class="contact" href="#">Chamar comprador</a>
+        </div>
+      </div>
+    </section>
+
+    <h2 class="section-title">Próximas funções</h2>
+    <div class="empty">
+      Em breve: formulário de anúncio, leitura automática da planilha, aprovação manual de vendas e atualização diária das ofertas de compra.
+    </div>
+
+  </main>
+
+  <footer>
+    Tibia Mural © 2026 — Projeto criado para anúncios de Tibia Coins.
+  </footer>
+
+</body>
+</html>
