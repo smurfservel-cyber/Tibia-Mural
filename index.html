@@ -418,87 +418,280 @@
   <main class="container">
 
     <div class="stats">
-      <div class="stat">
-        <strong>Manual</strong>
-        <span>Vendas aparecem somente depois da aprovação.</span>
-      </div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tibia Mural</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at top left,rgba(245,158,11,.16),transparent 30%),radial-gradient(circle at top right,rgba(34,197,94,.12),transparent 28%),#05070a;color:#f9fafb;min-height:100vh}
+    a{text-decoration:none}
+    .topbar{position:sticky;top:0;z-index:10;backdrop-filter:blur(14px);background:rgba(5,7,10,.82);border-bottom:1px solid rgba(255,255,255,.08)}
+    .nav{max-width:1120px;margin:auto;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;color:#fbbf24;font-size:18px}
+    .brand-icon{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#f59e0b,#92400e);display:grid;place-items:center;color:#111827;font-weight:900;box-shadow:0 0 22px rgba(245,158,11,.35)}
+    .nav-links{display:flex;gap:8px;font-size:13px;flex-wrap:wrap}
+    .nav-links a{color:#d1d5db;padding:8px 10px;border-radius:999px}
+    .nav-links a:hover{background:rgba(255,255,255,.08);color:#fff}
+    .hero{max-width:1120px;margin:auto;padding:42px 16px 24px}
+    .hero-card{position:relative;overflow:hidden;border-radius:28px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(135deg,rgba(17,24,39,.96),rgba(15,23,42,.92));box-shadow:0 24px 70px rgba(0,0,0,.48);padding:34px 24px}
+    .badge{display:inline-flex;background:rgba(245,158,11,.12);color:#fbbf24;border:1px solid rgba(245,158,11,.3);border-radius:999px;padding:8px 12px;font-size:13px;font-weight:800;margin-bottom:16px}
+    .hero h1{font-size:clamp(32px,7vw,58px);line-height:1.02;letter-spacing:-1.5px;margin-bottom:16px}
+    .hero h1 span{color:#fbbf24}
+    .hero p{color:#cbd5e1;font-size:16px;line-height:1.7;max-width:760px;margin-bottom:22px}
+    .actions{display:flex;gap:12px;flex-wrap:wrap}
+    .btn,button{border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:13px 16px;border-radius:13px;font-weight:900;font-size:14px;transition:.2s}
+    .btn-primary{background:linear-gradient(135deg,#22c55e,#15803d);color:white;box-shadow:0 12px 30px rgba(34,197,94,.22)}
+    .btn-secondary{background:rgba(255,255,255,.07);color:#fbbf24;border:1px solid rgba(255,255,255,.1)}
+    .btn:hover,button:hover{transform:translateY(-2px)}
+    .container{max-width:1120px;margin:auto;padding:0 16px 42px}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 30px}
+    .stat,.panel,.form-card,.empty-card{background:rgba(15,23,42,.84);border:1px solid rgba(255,255,255,.08);border-radius:22px;box-shadow:0 12px 30px rgba(0,0,0,.25)}
+    .stat{padding:18px}.stat strong{display:block;color:#fbbf24;font-size:25px;margin-bottom:6px}.stat span{color:#94a3b8;font-size:13px;line-height:1.45}
+    .section{margin-top:28px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:14px}
+    .section-title{font-size:24px;color:#fff;letter-spacing:-.4px}.section-subtitle{color:#94a3b8;font-size:13px;margin-top:6px;line-height:1.5}
+    .pill{white-space:nowrap;color:#fbbf24;background:rgba(245,158,11,.09);border:1px solid rgba(245,158,11,.22);padding:8px 11px;border-radius:999px;font-size:12px;font-weight:900}
+    .forms-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .form-card{padding:20px}.form-card h3{color:#fbbf24;margin-bottom:10px;font-size:18px}.form-card p{color:#94a3b8;font-size:13px;line-height:1.5;margin-bottom:14px}
+    label{display:block;color:#cbd5e1;font-size:13px;font-weight:800;margin:12px 0 6px}
+    input,select,textarea{width:100%;background:#020617;color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px;outline:none;font-size:14px}
+    input:focus,select:focus,textarea:focus{border-color:#f59e0b}
+    .full{grid-column:1/-1}
+    .empty-card{border-style:dashed;padding:26px 18px;text-align:center;color:#94a3b8;line-height:1.6}
+    .empty-icon{width:54px;height:54px;border-radius:18px;margin:0 auto 12px;display:grid;place-items:center;background:rgba(255,255,255,.06);color:#fbbf24;font-size:24px}
+    .panel{padding:20px}.panel h3{color:#fbbf24;margin-bottom:10px;font-size:18px}.panel p{color:#cbd5e1;line-height:1.65;font-size:14px}
+    footer{max-width:1120px;margin:auto;padding:24px 16px 34px;color:#64748b;text-align:center;font-size:13px;border-top:1px solid rgba(255,255,255,.06)}
+    @media(max-width:760px){.nav{align-items:flex-start;flex-direction:column}.hero{padding-top:24px}.hero-card{padding:26px 18px;border-radius:22px}.stats,.forms-grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.actions .btn,.form-card button{width:100%}}
+  </style>
+</head>
+<body>
 
-      <div class="stat">
-        <strong>24h</strong>
-        <span>Ofertas de compra preparadas para atualização diária.</span>
-      </div>
+<div class="topbar">
+  <nav class="nav">
+    <a class="brand" href="#"><span class="brand-icon">TC</span><span>Tibia Mural</span></a>
+    <div class="nav-links">
+      <a href="#conta">Conta</a>
+      <a href="#anunciar">Anunciar</a>
+      <a href="#vendas">Vendas</a>
+      <a href="#compras">Compras</a>
+      <a href="#seguranca">Segurança</a>
+    </div>
+  </nav>
+</div>
 
-      <div class="stat">
-        <strong>Direto</strong>
-        <span>Contato do anunciante exibido junto ao anúncio.</span>
+<section class="hero">
+  <div class="hero-card">
+    <div class="badge">Mural brasileiro de Tibia Coins</div>
+    <h1>Compra e venda de <span>TC</span> em um só lugar.</h1>
+    <p>Crie sua conta, envie seu anúncio com WhatsApp para contato e aguarde aprovação. As vendas só aparecem depois da revisão, e as ofertas de compra serão organizadas para atualização diária.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#anunciar">Criar anúncio</a>
+      <a class="btn btn-secondary" href="#conta">Criar conta ou entrar</a>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <div class="stats">
+    <div class="stat"><strong>Conta</strong><span>Área para cadastro e login dos anunciantes.</span></div>
+    <div class="stat"><strong>Manual</strong><span>Vendas aparecem somente depois da aprovação.</span></div>
+    <div class="stat"><strong>ZAP</strong><span>O contato será vinculado ao WhatsApp informado.</span></div>
+  </div>
+
+  <section class="section" id="conta">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Conta do anunciante</h2>
+        <p class="section-subtitle">Crie sua conta ou entre para enviar anúncios.</p>
       </div>
+      <span class="pill">Cadastro</span>
     </div>
 
-    <section class="section" id="vendas">
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">Vendas de TC aprovadas</h2>
-          <p class="section-subtitle">Área reservada para anúncios liberados manualmente.</p>
-        </div>
-        <span class="pill">Aprovação manual</span>
+    <div class="forms-grid">
+      <div class="form-card">
+        <h3>Criar conta</h3>
+        <p>Esses dados serão usados para identificar o anunciante na planilha.</p>
+
+        <label>Nome</label>
+        <input id="cadNome" type="text" placeholder="Ex: Servel">
+
+        <label>Email</label>
+        <input id="cadEmail" type="email" placeholder="seuemail@email.com">
+
+        <label>WhatsApp</label>
+        <input id="cadZap" type="text" placeholder="Ex: 5521999999999">
+
+        <label>Senha</label>
+        <input id="cadSenha" type="password" placeholder="Crie uma senha">
+
+        <br><br>
+        <button class="btn-primary" onclick="criarConta()">Criar conta</button>
       </div>
 
-      <div class="empty-card">
-        <div class="empty-icon">🛡️</div>
-        Nenhuma venda aprovada no momento.
+      <div class="form-card">
+        <h3>Login</h3>
+        <p>Primeira versão visual. Depois vamos validar com os dados salvos na planilha.</p>
+
+        <label>Email</label>
+        <input id="loginEmail" type="email" placeholder="seuemail@email.com">
+
+        <label>Senha</label>
+        <input id="loginSenha" type="password" placeholder="Sua senha">
+
+        <br><br>
+        <button class="btn-secondary" onclick="login()">Entrar</button>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section" id="compras">
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">Ofertas de compra</h2>
-          <p class="section-subtitle">Área reservada para compradores ativos de Tibia Coins.</p>
-        </div>
-        <span class="pill">Atualização 24h</span>
+  <section class="section" id="anunciar">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Criar anúncio</h2>
+        <p class="section-subtitle">O anúncio será enviado como pendente para aprovação.</p>
       </div>
+      <span class="pill">Pendente</span>
+    </div>
 
-      <div class="empty-card">
-        <div class="empty-icon">💰</div>
-        Nenhuma oferta de compra disponível no momento.
+    <div class="form-card">
+      <h3>Dados do anúncio</h3>
+
+      <label>Nome do anunciante</label>
+      <input id="anNome" type="text" placeholder="Ex: Servel">
+
+      <label>WhatsApp para contato</label>
+      <input id="anZap" type="text" placeholder="Ex: 5521999999999">
+
+      <label>Tipo de anúncio</label>
+      <select id="anTipo">
+        <option value="Venda">Venda de TC</option>
+        <option value="Compra">Compra de TC</option>
+      </select>
+
+      <label>Servidor</label>
+      <input id="anServidor" type="text" placeholder="Ex: Kalibra">
+
+      <label>Quantidade de TC</label>
+      <input id="anQuantidade" type="number" placeholder="Ex: 250">
+
+      <label>Valor</label>
+      <input id="anValor" type="text" placeholder="Ex: R$ 52,00">
+
+      <br><br>
+      <button class="btn-primary" onclick="criarAnuncio()">Enviar anúncio para aprovação</button>
+    </div>
+  </section>
+
+  <section class="section" id="vendas">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Vendas de TC aprovadas</h2>
+        <p class="section-subtitle">Área reservada para anúncios liberados manualmente.</p>
       </div>
-    </section>
+      <span class="pill">Aprovação manual</span>
+    </div>
+    <div class="empty-card"><div class="empty-icon">🛡️</div>Nenhuma venda aprovada no momento.</div>
+  </section>
 
-    <section class="security" id="seguranca">
-      <div class="panel">
-        <h3>Controle antes de aparecer no site</h3>
-        <p>
-          A estrutura foi pensada para evitar que anúncios de venda apareçam automaticamente sem revisão. Depois da integração com a planilha, os anúncios só serão exibidos quando estiverem marcados como aprovados.
-        </p>
+  <section class="section" id="compras">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Ofertas de compra</h2>
+        <p class="section-subtitle">Área reservada para compradores ativos de Tibia Coins.</p>
       </div>
+      <span class="pill">Atualização 24h</span>
+    </div>
+    <div class="empty-card"><div class="empty-icon">💰</div>Nenhuma oferta de compra disponível no momento.</div>
+  </section>
 
-      <div class="panel" id="funcionamento">
-        <h3>Como vai funcionar</h3>
+  <section class="section" id="seguranca">
+    <div class="panel">
+      <h3>Segurança e aprovação</h3>
+      <p>As vendas não aparecem automaticamente no site. Quando a planilha for conectada, todo anúncio será salvo como pendente, e apenas os aprovados serão exibidos publicamente.</p>
+    </div>
+  </section>
 
-        <div class="steps">
-          <div class="step">
-            <b>1</b>
-            <span>O anúncio entra na planilha.</span>
-          </div>
+</main>
 
-          <div class="step">
-            <b>2</b>
-            <span>Você aprova ou mantém pendente.</span>
-          </div>
+<footer>Tibia Mural © 2026 — Projeto para anúncios de Tibia Coins.</footer>
 
-          <div class="step">
-            <b>3</b>
-            <span>O site mostra somente o que estiver liberado.</span>
-          </div>
-        </div>
-      </div>
-    </section>
+<script>
+  const SCRIPT_URL = "COLE_AQUI_O_LINK_DO_APPS_SCRIPT";
 
-  </main>
+  function limparZap(zap) {
+    return zap.replace(/\D/g, "");
+  }
 
-  <footer>
-    Tibia Mural © 2026 — Projeto para anúncios de Tibia Coins.
-  </footer>
+  async function enviarParaPlanilha(dados) {
+    if (SCRIPT_URL === "COLE_AQUI_O_LINK_DO_APPS_SCRIPT") {
+      alert("App visual pronto. Agora falta colocar o link do Apps Script para salvar na planilha.");
+      return;
+    }
+
+    try {
+      const resposta = await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify(dados)
+      });
+
+      const resultado = await resposta.json();
+      alert(resultado.mensagem || "Enviado com sucesso!");
+    } catch (erro) {
+      alert("Erro ao enviar. Verifique o link do Apps Script.");
+    }
+  }
+
+  function criarConta() {
+    const nome = document.getElementById("cadNome").value.trim();
+    const email = document.getElementById("cadEmail").value.trim();
+    const whatsapp = limparZap(document.getElementById("cadZap").value);
+    const senha = document.getElementById("cadSenha").value.trim();
+
+    if (!nome || !email || !whatsapp || !senha) {
+      alert("Preencha todos os campos para criar conta.");
+      return;
+    }
+
+    enviarParaPlanilha({
+      tipo: "cadastro",
+      nome,
+      email,
+      whatsapp,
+      senha
+    });
+  }
+
+  function login() {
+    alert("Login visual criado. Na próxima etapa vamos validar email e senha pela planilha.");
+  }
+
+  function criarAnuncio() {
+    const nome = document.getElementById("anNome").value.trim();
+    const whatsapp = limparZap(document.getElementById("anZap").value);
+    const tipoAnuncio = document.getElementById("anTipo").value;
+    const servidor = document.getElementById("anServidor").value.trim();
+    const quantidade = document.getElementById("anQuantidade").value.trim();
+    const valor = document.getElementById("anValor").value.trim();
+
+    if (!nome || !whatsapp || !tipoAnuncio || !servidor || !quantidade || !valor) {
+      alert("Preencha todos os campos do anúncio.");
+      return;
+    }
+
+    enviarParaPlanilha({
+      tipo: "anuncio",
+      nome,
+      whatsapp,
+      tipoAnuncio,
+      servidor,
+      quantidade,
+      valor
+    });
+  }
+</script>
 
 </body>
 </html>
