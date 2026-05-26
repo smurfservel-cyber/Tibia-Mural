@@ -1,504 +1,156 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tibia Mural</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tibia Mural</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;background:#05070a;color:#fff}
+a{text-decoration:none;color:inherit}
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(245, 158, 11, 0.16), transparent 30%),
-        radial-gradient(circle at top right, rgba(34, 197, 94, 0.12), transparent 28%),
-        #05070a;
-      color: #f9fafb;
-      min-height: 100vh;
-    }
+.topbar{background:#05070a;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:99}
+.nav{max-width:1180px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;color:#fbbf24;font-weight:900;font-size:20px}
+.brand-icon{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#f59e0b,#92400e);color:#111;display:grid;place-items:center;font-weight:900}
+.nav-links{display:flex;gap:20px;font-size:14px;color:#e5e7eb}
+.nav-links a:hover{color:#fbbf24}
 
-    a {
-      text-decoration: none;
-    }
+.hero{max-width:1180px;margin:auto;padding:42px 20px 20px}
+.hero-card{background:linear-gradient(135deg,#111827,#0f172a);border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:48px 40px;box-shadow:0 25px 70px rgba(0,0,0,.45)}
+.badge{display:inline-block;padding:9px 14px;border-radius:999px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.4);color:#fbbf24;font-weight:900;font-size:14px;margin-bottom:20px}
+.hero h1{font-size:56px;max-width:820px;line-height:1.05;margin-bottom:18px}
+.hero h1 span{color:#fbbf24}
+.hero p{max-width:850px;line-height:1.7;color:#dbeafe;font-size:17px;margin-bottom:26px}
+.actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn,button{border:0;cursor:pointer;padding:14px 18px;border-radius:13px;font-weight:900;font-size:15px}
+.btn-primary{background:#22c55e;color:white}
+.btn-secondary{background:#1f2937;color:#fbbf24;border:1px solid rgba(255,255,255,.12)}
+.btn-warning{background:#f59e0b;color:#111827}
 
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(14px);
-      background: rgba(5, 7, 10, 0.82);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
+.container{max-width:1180px;margin:auto;padding:20px}
+.section{margin-top:36px}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:16px}
+.section-title{font-size:28px}
+.section-subtitle{color:#94a3b8;font-size:14px;margin-top:6px}
+.pill{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.35);color:#fbbf24;padding:8px 12px;border-radius:999px;font-size:13px;font-weight:900;white-space:nowrap}
 
-    .nav {
-      max-width: 1120px;
-      margin: auto;
-      padding: 14px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
+.notice{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fef3c7;border-radius:18px;padding:16px;line-height:1.6;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card,.stat,.form-card,.panel,.empty-card{background:#0f172a;border:1px solid rgba(255,255,255,.09);border-radius:22px;box-shadow:0 14px 35px rgba(0,0,0,.28)}
+.card{padding:22px}
+.card-tag{display:inline-block;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.28);color:#86efac;padding:7px 11px;border-radius:999px;font-size:12px;font-weight:900;margin-bottom:12px}
+.card h3{color:#fbbf24;font-size:21px;margin-bottom:10px}
+.card p{color:#cbd5e1;line-height:1.5;margin:7px 0;font-size:14px}
+.price{font-size:25px;color:#22c55e;font-weight:900;margin:12px 0}
+.card-btn{display:block;text-align:center;background:#22c55e;color:#fff;border-radius:12px;padding:12px;margin-top:14px;font-weight:900}
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 900;
-      color: #fbbf24;
-      font-size: 18px;
-    }
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:20px 0 40px}
+.stat{padding:22px}
+.stat strong{display:block;color:#fbbf24;font-size:24px;margin-bottom:8px}
+.stat span{color:#cbd5e1;line-height:1.5;font-size:14px}
 
-    .brand-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #f59e0b, #92400e);
-      display: grid;
-      place-items: center;
-      color: #111827;
-      font-weight: 900;
-      box-shadow: 0 0 22px rgba(245, 158, 11, .35);
-    }
+.forms-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.form-card{padding:24px}
+.form-card h3{color:#fbbf24;font-size:21px;margin-bottom:8px}
+.form-card p{color:#94a3b8;line-height:1.5;font-size:14px;margin-bottom:12px}
+label{display:block;margin:14px 0 6px;font-size:14px;font-weight:900;color:#e5e7eb}
+input,select,textarea{width:100%;background:#020617;color:#fff;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:13px;font-size:15px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#f59e0b}
+.rules,.pix-box{border-radius:16px;padding:15px;line-height:1.6;font-size:14px;margin:14px 0}
+.rules{background:rgba(245,158,11,.09);border:1px solid rgba(245,158,11,.3);color:#fef3c7}
+.rules strong{color:#fbbf24}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0}
+.plan{background:#020617;border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:18px}
+.plan h4{font-size:18px;margin-bottom:8px}
+.plan-price{font-size:25px;color:#22c55e;font-weight:900;margin-bottom:8px}
+.plan p{color:#94a3b8;line-height:1.5}
+.pix-box{display:none;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);color:#dcfce7}
+.pix-key{margin-top:10px;background:#020617;border:1px dashed rgba(34,197,94,.4);color:#86efac;border-radius:12px;padding:12px;font-weight:900;word-break:break-all}
+.empty-card{border-style:dashed;padding:34px;text-align:center;color:#94a3b8;line-height:1.6}
+.empty-icon{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;background:rgba(255,255,255,.06);margin:0 auto 14px;font-size:26px}
+.panel{padding:24px}
+.panel h3{color:#fbbf24;font-size:21px;margin-bottom:10px}
+.panel p{color:#cbd5e1;line-height:1.7}
+footer{max-width:1180px;margin:40px auto 0;padding:28px 20px;border-top:1px solid rgba(255,255,255,.08);color:#64748b;text-align:center}
 
-    .nav-links {
-      display: flex;
-      gap: 10px;
-      font-size: 13px;
-    }
-
-    .nav-links a {
-      color: #d1d5db;
-      padding: 8px 10px;
-      border-radius: 999px;
-    }
-
-    .nav-links a:hover {
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-    }
-
-    .hero {
-      max-width: 1120px;
-      margin: auto;
-      padding: 42px 16px 24px;
-    }
-
-    .hero-card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 28px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background:
-        linear-gradient(135deg, rgba(17, 24, 39, .96), rgba(15, 23, 42, .92)),
-        radial-gradient(circle at top right, rgba(245, 158, 11, .22), transparent 35%);
-      box-shadow: 0 24px 70px rgba(0,0,0,.48);
-      padding: 34px 24px;
-    }
-
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(245,158,11,.18), transparent 22%),
-        radial-gradient(circle at 80% 30%, rgba(34,197,94,.12), transparent 26%);
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      max-width: 820px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(245,158,11,.12);
-      color: #fbbf24;
-      border: 1px solid rgba(245,158,11,.3);
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-size: 13px;
-      font-weight: 800;
-      margin-bottom: 16px;
-    }
-
-    .hero h1 {
-      font-size: clamp(32px, 7vw, 58px);
-      line-height: 1.02;
-      letter-spacing: -1.5px;
-      margin-bottom: 16px;
-    }
-
-    .hero h1 span {
-      color: #fbbf24;
-    }
-
-    .hero p {
-      color: #cbd5e1;
-      font-size: 16px;
-      line-height: 1.7;
-      max-width: 720px;
-      margin-bottom: 22px;
-    }
-
-    .actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 13px 16px;
-      border-radius: 13px;
-      font-weight: 900;
-      font-size: 14px;
-      transition: .2s;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #22c55e, #15803d);
-      color: white;
-      box-shadow: 0 12px 30px rgba(34,197,94,.22);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.07);
-      color: #fbbf24;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .container {
-      max-width: 1120px;
-      margin: auto;
-      padding: 0 16px 42px;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin: 18px 0 30px;
-    }
-
-    .stat {
-      background: rgba(15, 23, 42, .84);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 12px 30px rgba(0,0,0,.25);
-    }
-
-    .stat strong {
-      display: block;
-      color: #fbbf24;
-      font-size: 25px;
-      margin-bottom: 6px;
-    }
-
-    .stat span {
-      color: #94a3b8;
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .section {
-      margin-top: 28px;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .section-title {
-      font-size: 24px;
-      color: #fff;
-      letter-spacing: -0.4px;
-    }
-
-    .section-subtitle {
-      color: #94a3b8;
-      font-size: 13px;
-      margin-top: 6px;
-      line-height: 1.5;
-    }
-
-    .pill {
-      white-space: nowrap;
-      color: #fbbf24;
-      background: rgba(245,158,11,.09);
-      border: 1px solid rgba(245,158,11,.22);
-      padding: 8px 11px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .empty-card {
-      border-radius: 22px;
-      border: 1px dashed rgba(255,255,255,0.16);
-      background:
-        linear-gradient(135deg, rgba(15, 23, 42, .88), rgba(17, 24, 39, .7));
-      padding: 26px 18px;
-      text-align: center;
-      color: #94a3b8;
-      line-height: 1.6;
-    }
-
-    .empty-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
-      margin: 0 auto 12px;
-      display: grid;
-      place-items: center;
-      background: rgba(255,255,255,0.06);
-      color: #fbbf24;
-      font-size: 24px;
-    }
-
-    .security {
-      margin-top: 28px;
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 14px;
-    }
-
-    .panel {
-      background: rgba(15, 23, 42, .82);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 22px;
-      padding: 20px;
-    }
-
-    .panel h3 {
-      color: #fbbf24;
-      margin-bottom: 10px;
-      font-size: 18px;
-    }
-
-    .panel p {
-      color: #cbd5e1;
-      line-height: 1.65;
-      font-size: 14px;
-    }
-
-    .steps {
-      display: grid;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .step {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      color: #cbd5e1;
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    .step b {
-      min-width: 26px;
-      height: 26px;
-      border-radius: 9px;
-      background: rgba(245,158,11,.14);
-      color: #fbbf24;
-      display: grid;
-      place-items: center;
-      font-size: 12px;
-    }
-
-    footer {
-      max-width: 1120px;
-      margin: auto;
-      padding: 24px 16px 34px;
-      color: #64748b;
-      text-align: center;
-      font-size: 13px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-
-    @media (max-width: 760px) {
-      .nav {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .nav-links {
-        width: 100%;
-        overflow-x: auto;
-        padding-bottom: 2px;
-      }
-
-      .hero {
-        padding-top: 24px;
-      }
-
-      .hero-card {
-        padding: 26px 18px;
-        border-radius: 22px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .security {
-        grid-template-columns: 1fr;
-      }
-
-      .section-head {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .actions .btn {
-        width: 100%;
-      }
-    }
-  </style>
+@media(max-width:950px){
+  .hero h1{font-size:42px}
+  .grid,.stats,.plans{grid-template-columns:1fr 1fr}
+  .forms-grid{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+  .nav{flex-direction:column;align-items:flex-start}
+  .nav-links{gap:10px;flex-wrap:wrap}
+  .hero{padding:24px 14px}
+  .hero-card{padding:28px 20px;border-radius:22px}
+  .hero h1{font-size:34px}
+  .grid,.stats,.plans{grid-template-columns:1fr}
+  .section-head{flex-direction:column;align-items:flex-start}
+  .btn,button{width:100%}
+}
+</style>
 </head>
 
 <body>
 
-  <div class="topbar">
-    <nav class="nav">
-      <a class="brand" href="#">
-        <span class="brand-icon">TC</span>
-        <span>Tibia Mural</span>
-      </a>
-
-      <div class="nav-links">
-        <a href="#vendas">Vendas</a>
-        <a href="#compras">Compras</a>
-        <a href="#seguranca">Segurança</a>
-        <a href="#funcionamento">Como funciona</a>
-      </div>
-    </nav>
-  </div>
-
-  <section class="hero">
-    <div class="hero-card">
-      <div class="hero-content">
-        <div class="badge">Mural brasileiro de Tibia Coins</div>
-
-        <h1>Compra e venda de <span>TC</span> em um só lugar.</h1>
-
-        <p>
-          O Tibia Mural está sendo preparado para exibir anúncios aprovados manualmente, ofertas de compra atualizadas diariamente e contatos diretos dos anunciantes em uma página simples, rápida e organizada.
-        </p>
-
-        <div class="actions">
-          <a class="btn btn-primary" href="#vendas">Ver vendas aprovadas</a>
-          <a class="btn btn-secondary" href="#compras">Ver ofertas de compra</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <main class="container">
-
-    <div class="stats">
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tibia Mural</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at top left,rgba(245,158,11,.16),transparent 30%),radial-gradient(circle at top right,rgba(34,197,94,.12),transparent 28%),#05070a;color:#f9fafb;min-height:100vh}
-    a{text-decoration:none}
-    .topbar{position:sticky;top:0;z-index:10;backdrop-filter:blur(14px);background:rgba(5,7,10,.82);border-bottom:1px solid rgba(255,255,255,.08)}
-    .nav{max-width:1120px;margin:auto;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:900;color:#fbbf24;font-size:18px}
-    .brand-icon{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#f59e0b,#92400e);display:grid;place-items:center;color:#111827;font-weight:900;box-shadow:0 0 22px rgba(245,158,11,.35)}
-    .nav-links{display:flex;gap:8px;font-size:13px;flex-wrap:wrap}
-    .nav-links a{color:#d1d5db;padding:8px 10px;border-radius:999px}
-    .nav-links a:hover{background:rgba(255,255,255,.08);color:#fff}
-    .hero{max-width:1120px;margin:auto;padding:42px 16px 24px}
-    .hero-card{position:relative;overflow:hidden;border-radius:28px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(135deg,rgba(17,24,39,.96),rgba(15,23,42,.92));box-shadow:0 24px 70px rgba(0,0,0,.48);padding:34px 24px}
-    .badge{display:inline-flex;background:rgba(245,158,11,.12);color:#fbbf24;border:1px solid rgba(245,158,11,.3);border-radius:999px;padding:8px 12px;font-size:13px;font-weight:800;margin-bottom:16px}
-    .hero h1{font-size:clamp(32px,7vw,58px);line-height:1.02;letter-spacing:-1.5px;margin-bottom:16px}
-    .hero h1 span{color:#fbbf24}
-    .hero p{color:#cbd5e1;font-size:16px;line-height:1.7;max-width:760px;margin-bottom:22px}
-    .actions{display:flex;gap:12px;flex-wrap:wrap}
-    .btn,button{border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:13px 16px;border-radius:13px;font-weight:900;font-size:14px;transition:.2s}
-    .btn-primary{background:linear-gradient(135deg,#22c55e,#15803d);color:white;box-shadow:0 12px 30px rgba(34,197,94,.22)}
-    .btn-secondary{background:rgba(255,255,255,.07);color:#fbbf24;border:1px solid rgba(255,255,255,.1)}
-    .btn:hover,button:hover{transform:translateY(-2px)}
-    .container{max-width:1120px;margin:auto;padding:0 16px 42px}
-    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 30px}
-    .stat,.panel,.form-card,.empty-card{background:rgba(15,23,42,.84);border:1px solid rgba(255,255,255,.08);border-radius:22px;box-shadow:0 12px 30px rgba(0,0,0,.25)}
-    .stat{padding:18px}.stat strong{display:block;color:#fbbf24;font-size:25px;margin-bottom:6px}.stat span{color:#94a3b8;font-size:13px;line-height:1.45}
-    .section{margin-top:28px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:14px}
-    .section-title{font-size:24px;color:#fff;letter-spacing:-.4px}.section-subtitle{color:#94a3b8;font-size:13px;margin-top:6px;line-height:1.5}
-    .pill{white-space:nowrap;color:#fbbf24;background:rgba(245,158,11,.09);border:1px solid rgba(245,158,11,.22);padding:8px 11px;border-radius:999px;font-size:12px;font-weight:900}
-    .forms-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .form-card{padding:20px}.form-card h3{color:#fbbf24;margin-bottom:10px;font-size:18px}.form-card p{color:#94a3b8;font-size:13px;line-height:1.5;margin-bottom:14px}
-    label{display:block;color:#cbd5e1;font-size:13px;font-weight:800;margin:12px 0 6px}
-    input,select,textarea{width:100%;background:#020617;color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px;outline:none;font-size:14px}
-    input:focus,select:focus,textarea:focus{border-color:#f59e0b}
-    .full{grid-column:1/-1}
-    .empty-card{border-style:dashed;padding:26px 18px;text-align:center;color:#94a3b8;line-height:1.6}
-    .empty-icon{width:54px;height:54px;border-radius:18px;margin:0 auto 12px;display:grid;place-items:center;background:rgba(255,255,255,.06);color:#fbbf24;font-size:24px}
-    .panel{padding:20px}.panel h3{color:#fbbf24;margin-bottom:10px;font-size:18px}.panel p{color:#cbd5e1;line-height:1.65;font-size:14px}
-    footer{max-width:1120px;margin:auto;padding:24px 16px 34px;color:#64748b;text-align:center;font-size:13px;border-top:1px solid rgba(255,255,255,.06)}
-    @media(max-width:760px){.nav{align-items:flex-start;flex-direction:column}.hero{padding-top:24px}.hero-card{padding:26px 18px;border-radius:22px}.stats,.forms-grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.actions .btn,.form-card button{width:100%}}
-  </style>
-</head>
-<body>
-
-<div class="topbar">
+<header class="topbar">
   <nav class="nav">
-    <a class="brand" href="#"><span class="brand-icon">TC</span><span>Tibia Mural</span></a>
+    <a class="brand" href="#">
+      <span class="brand-icon">TC</span>
+      <span>Tibia Mural</span>
+    </a>
     <div class="nav-links">
+      <a href="#inicio">Início</a>
       <a href="#conta">Conta</a>
       <a href="#anunciar">Anunciar</a>
-      <a href="#vendas">Vendas</a>
       <a href="#compras">Compras</a>
       <a href="#seguranca">Segurança</a>
     </div>
   </nav>
-</div>
+</header>
 
-<section class="hero">
+<section class="hero" id="inicio">
   <div class="hero-card">
-    <div class="badge">Mural brasileiro de Tibia Coins</div>
-    <h1>Compra e venda de <span>TC</span> em um só lugar.</h1>
-    <p>Crie sua conta, envie seu anúncio com WhatsApp para contato e aguarde aprovação. As vendas só aparecem depois da revisão, e as ofertas de compra serão organizadas para atualização diária.</p>
+    <span class="badge">Mural brasileiro de Tibia Coins</span>
+    <h1>Anúncios ativos de <span>TC</span> em destaque.</h1>
+    <p>A página inicial foi organizada para mostrar primeiro os anúncios ativos. Cada anúncio terá duração conforme o plano escolhido: 5 dias, 7 dias ou 30 dias. As ofertas de compra serão atualizadas todos os dias às 5h da manhã.</p>
     <div class="actions">
       <a class="btn btn-primary" href="#anunciar">Criar anúncio</a>
-      <a class="btn btn-secondary" href="#conta">Criar conta ou entrar</a>
+      <a class="btn btn-secondary" href="#anuncios">Ver anúncios ativos</a>
+      <a class="btn btn-warning" href="#pagamento">Ver planos</a>
     </div>
   </div>
 </section>
 
 <main class="container">
 
+  <section class="section" id="anuncios">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Anúncios ativos</h2>
+        <p class="section-subtitle">Aqui ficarão os anúncios aprovados e ainda dentro do prazo ativo.</p>
+      </div>
+      <span class="pill">Página inicial</span>
+    </div>
+
+    <div class="notice">
+      Os anúncios aparecerão aqui depois que a planilha for conectada. O site só exibirá anúncios com status aprovado e dentro do prazo escolhido pelo anunciante.
+    </div>
+
+    <div class="empty-card">
+      <div class="empty-icon">📢</div>
+      Nenhum anúncio ativo no momento.
+    </div>
+  </section>
+
   <div class="stats">
-    <div class="stat"><strong>Conta</strong><span>Área para cadastro e login dos anunciantes.</span></div>
-    <div class="stat"><strong>Manual</strong><span>Vendas aparecem somente depois da aprovação.</span></div>
-    <div class="stat"><strong>ZAP</strong><span>O contato será vinculado ao WhatsApp informado.</span></div>
+    <div class="stat"><strong>5 dias</strong><span>R$ 2,00 para anúncio de 250 TC ou mais.</span></div>
+    <div class="stat"><strong>7 dias</strong><span>R$ 8,00 para manter o anúncio ativo por uma semana.</span></div>
+    <div class="stat"><strong>30 dias</strong><span>R$ 30,00 para anúncio ativo por um mês.</span></div>
+    <div class="stat"><strong>5h AM</strong><span>Ofertas de compra atualizadas todos os dias.</span></div>
   </div>
 
   <section class="section" id="conta">
@@ -507,13 +159,13 @@
         <h2 class="section-title">Conta do anunciante</h2>
         <p class="section-subtitle">Crie sua conta ou entre para enviar anúncios.</p>
       </div>
-      <span class="pill">Cadastro</span>
+      <span class="pill">Cadastro/Login</span>
     </div>
 
     <div class="forms-grid">
       <div class="form-card">
         <h3>Criar conta</h3>
-        <p>Esses dados serão usados para identificar o anunciante na planilha.</p>
+        <p>Esses dados serão usados para identificar o anunciante.</p>
 
         <label>Nome</label>
         <input id="cadNome" type="text" placeholder="Ex: Servel">
@@ -533,7 +185,7 @@
 
       <div class="form-card">
         <h3>Login</h3>
-        <p>Primeira versão visual. Depois vamos validar com os dados salvos na planilha.</p>
+        <p>Depois vamos validar o login com os dados salvos na planilha.</p>
 
         <label>Email</label>
         <input id="loginEmail" type="email" placeholder="seuemail@email.com">
@@ -551,13 +203,17 @@
     <div class="section-head">
       <div>
         <h2 class="section-title">Criar anúncio</h2>
-        <p class="section-subtitle">O anúncio será enviado como pendente para aprovação.</p>
+        <p class="section-subtitle">Escolha o tempo que o anúncio ficará ativo no site.</p>
       </div>
-      <span class="pill">Pendente</span>
+      <span class="pill">Pendente para aprovação</span>
     </div>
 
     <div class="form-card">
       <h3>Dados do anúncio</h3>
+
+      <div class="rules">
+        <strong>Regra obrigatória:</strong> para venda de TC, o print precisa mostrar o histórico do char e comprovar que as Tibia Coins anunciadas vieram do Market. Não serão aceitas coins recebidas diretamente de outros players.
+      </div>
 
       <label>Nome do anunciante</label>
       <input id="anNome" type="text" placeholder="Ex: Servel">
@@ -575,42 +231,80 @@
       <input id="anServidor" type="text" placeholder="Ex: Kalibra">
 
       <label>Quantidade de TC</label>
-      <input id="anQuantidade" type="number" placeholder="Ex: 250">
+      <input id="anQuantidade" type="number" placeholder="Ex: 250" oninput="atualizarPlano()">
 
-      <label>Valor</label>
+      <label>Valor do anúncio</label>
       <input id="anValor" type="text" placeholder="Ex: R$ 52,00">
 
-      <br><br>
+      <label>Print obrigatório</label>
+      <input id="anPrint" type="file" accept="image/*">
+
+      <label>Observação</label>
+      <textarea id="anObs" rows="3" placeholder="Ex: TC comprada pelo Market, entrega após confirmação."></textarea>
+
+      <section id="pagamento">
+        <h3 style="margin-top:24px;">Tempo ativo no site</h3>
+
+        <div class="plans">
+          <div class="plan">
+            <h4>5 dias</h4>
+            <div class="plan-price">R$ 2,00</div>
+            <p>Disponível para anúncios com 250 TC ou mais.</p>
+          </div>
+
+          <div class="plan">
+            <h4>7 dias</h4>
+            <div class="plan-price">R$ 8,00</div>
+            <p>O anúncio fica ativo por 7 dias após aprovação.</p>
+          </div>
+
+          <div class="plan">
+            <h4>30 dias</h4>
+            <div class="plan-price">R$ 30,00</div>
+            <p>O anúncio fica ativo por 30 dias após aprovação.</p>
+          </div>
+        </div>
+
+        <label>Escolha a duração</label>
+        <select id="anDuracao" onchange="atualizarPlano()">
+          <option value="5">5 dias - R$ 2,00</option>
+          <option value="7">7 dias - R$ 8,00</option>
+          <option value="30">30 dias - R$ 30,00</option>
+        </select>
+
+        <div class="pix-box" id="boxPix" style="display:block;">
+          Faça o Pix referente ao plano escolhido e envie o comprovante.
+          <div class="pix-key">Chave Pix: COLOQUE_SUA_CHAVE_PIX_AQUI</div>
+
+          <label>Comprovante do Pix</label>
+          <input id="anComprovantePix" type="file" accept="image/*,application/pdf">
+        </div>
+      </section>
+
+      <br>
       <button class="btn-primary" onclick="criarAnuncio()">Enviar anúncio para aprovação</button>
     </div>
-  </section>
-
-  <section class="section" id="vendas">
-    <div class="section-head">
-      <div>
-        <h2 class="section-title">Vendas de TC aprovadas</h2>
-        <p class="section-subtitle">Área reservada para anúncios liberados manualmente.</p>
-      </div>
-      <span class="pill">Aprovação manual</span>
-    </div>
-    <div class="empty-card"><div class="empty-icon">🛡️</div>Nenhuma venda aprovada no momento.</div>
   </section>
 
   <section class="section" id="compras">
     <div class="section-head">
       <div>
         <h2 class="section-title">Ofertas de compra</h2>
-        <p class="section-subtitle">Área reservada para compradores ativos de Tibia Coins.</p>
+        <p class="section-subtitle">As ofertas serão atualizadas todos os dias às 5h AM.</p>
       </div>
-      <span class="pill">Atualização 24h</span>
+      <span class="pill">Atualização 5h AM</span>
     </div>
-    <div class="empty-card"><div class="empty-icon">💰</div>Nenhuma oferta de compra disponível no momento.</div>
+
+    <div class="empty-card">
+      <div class="empty-icon">💰</div>
+      Nenhuma oferta de compra disponível no momento.
+    </div>
   </section>
 
   <section class="section" id="seguranca">
     <div class="panel">
-      <h3>Segurança e aprovação</h3>
-      <p>As vendas não aparecem automaticamente no site. Quando a planilha for conectada, todo anúncio será salvo como pendente, e apenas os aprovados serão exibidos publicamente.</p>
+      <h3>Segurança, aprovação e validade</h3>
+      <p>Todo anúncio enviado ficará como pendente. Depois da aprovação, o anúncio ficará ativo pelo tempo escolhido: 5 dias, 7 dias ou 30 dias. Quando o prazo acabar, ele deixa de aparecer automaticamente no site. O WhatsApp informado será usado para gerar o contato direto do anúncio.</p>
     </div>
   </section>
 
@@ -619,78 +313,106 @@
 <footer>Tibia Mural © 2026 — Projeto para anúncios de Tibia Coins.</footer>
 
 <script>
-  const SCRIPT_URL = "COLE_AQUI_O_LINK_DO_APPS_SCRIPT";
+const SCRIPT_URL = "COLE_AQUI_O_LINK_DO_APPS_SCRIPT";
 
-  function limparZap(zap) {
-    return zap.replace(/\D/g, "");
+function limparZap(zap){
+  return zap.replace(/\D/g,"");
+}
+
+function precoPlano(duracao){
+  if(duracao === "5") return "R$ 2,00";
+  if(duracao === "7") return "R$ 8,00";
+  if(duracao === "30") return "R$ 30,00";
+  return "R$ 0,00";
+}
+
+function atualizarPlano(){
+  const duracao = document.getElementById("anDuracao").value;
+  const quantidade = Number(document.getElementById("anQuantidade").value || 0);
+
+  if(duracao === "5" && quantidade > 0 && quantidade < 250){
+    alert("O plano de 5 dias por R$ 2,00 é apenas para anúncios com 250 TC ou mais.");
+    document.getElementById("anDuracao").value = "7";
+  }
+}
+
+async function enviarParaPlanilha(dados){
+  if(SCRIPT_URL === "COLE_AQUI_O_LINK_DO_APPS_SCRIPT"){
+    alert("Site pronto visualmente. Depois vamos conectar com o Apps Script da planilha.");
+    return;
   }
 
-  async function enviarParaPlanilha(dados) {
-    if (SCRIPT_URL === "COLE_AQUI_O_LINK_DO_APPS_SCRIPT") {
-      alert("App visual pronto. Agora falta colocar o link do Apps Script para salvar na planilha.");
-      return;
-    }
-
-    try {
-      const resposta = await fetch(SCRIPT_URL, {
-        method: "POST",
-        body: JSON.stringify(dados)
-      });
-
-      const resultado = await resposta.json();
-      alert(resultado.mensagem || "Enviado com sucesso!");
-    } catch (erro) {
-      alert("Erro ao enviar. Verifique o link do Apps Script.");
-    }
-  }
-
-  function criarConta() {
-    const nome = document.getElementById("cadNome").value.trim();
-    const email = document.getElementById("cadEmail").value.trim();
-    const whatsapp = limparZap(document.getElementById("cadZap").value);
-    const senha = document.getElementById("cadSenha").value.trim();
-
-    if (!nome || !email || !whatsapp || !senha) {
-      alert("Preencha todos os campos para criar conta.");
-      return;
-    }
-
-    enviarParaPlanilha({
-      tipo: "cadastro",
-      nome,
-      email,
-      whatsapp,
-      senha
+  try{
+    const resposta = await fetch(SCRIPT_URL,{
+      method:"POST",
+      body:JSON.stringify(dados)
     });
+    const resultado = await resposta.json();
+    alert(resultado.mensagem || "Enviado com sucesso!");
+  }catch(e){
+    alert("Erro ao enviar. Verifique o link do Apps Script.");
+  }
+}
+
+function criarConta(){
+  const nome = document.getElementById("cadNome").value.trim();
+  const email = document.getElementById("cadEmail").value.trim();
+  const whatsapp = limparZap(document.getElementById("cadZap").value);
+  const senha = document.getElementById("cadSenha").value.trim();
+
+  if(!nome || !email || !whatsapp || !senha){
+    alert("Preencha todos os campos para criar conta.");
+    return;
   }
 
-  function login() {
-    alert("Login visual criado. Na próxima etapa vamos validar email e senha pela planilha.");
+  enviarParaPlanilha({tipo:"cadastro",nome,email,whatsapp,senha});
+}
+
+function login(){
+  alert("Login visual criado. Na próxima etapa vamos validar email e senha pela planilha.");
+}
+
+function criarAnuncio(){
+  const nome = document.getElementById("anNome").value.trim();
+  const whatsapp = limparZap(document.getElementById("anZap").value);
+  const tipoAnuncio = document.getElementById("anTipo").value;
+  const servidor = document.getElementById("anServidor").value.trim();
+  const quantidade = document.getElementById("anQuantidade").value.trim();
+  const valor = document.getElementById("anValor").value.trim();
+  const print = document.getElementById("anPrint").files[0];
+  const observacao = document.getElementById("anObs").value.trim();
+  const duracao = document.getElementById("anDuracao").value;
+  const comprovantePix = document.getElementById("anComprovantePix").files[0];
+
+  if(!nome || !whatsapp || !tipoAnuncio || !servidor || !quantidade || !valor || !print || !comprovantePix){
+    alert("Preencha todos os campos obrigatórios, envie o print e o comprovante do Pix.");
+    return;
   }
 
-  function criarAnuncio() {
-    const nome = document.getElementById("anNome").value.trim();
-    const whatsapp = limparZap(document.getElementById("anZap").value);
-    const tipoAnuncio = document.getElementById("anTipo").value;
-    const servidor = document.getElementById("anServidor").value.trim();
-    const quantidade = document.getElementById("anQuantidade").value.trim();
-    const valor = document.getElementById("anValor").value.trim();
-
-    if (!nome || !whatsapp || !tipoAnuncio || !servidor || !quantidade || !valor) {
-      alert("Preencha todos os campos do anúncio.");
-      return;
-    }
-
-    enviarParaPlanilha({
-      tipo: "anuncio",
-      nome,
-      whatsapp,
-      tipoAnuncio,
-      servidor,
-      quantidade,
-      valor
-    });
+  if(duracao === "5" && Number(quantidade) < 250){
+    alert("O plano de 5 dias por R$ 2,00 exige anúncio de 250 TC ou mais.");
+    return;
   }
+
+  enviarParaPlanilha({
+    tipo:"anuncio",
+    nome,
+    whatsapp,
+    linkWhatsapp:"https://wa.me/"+whatsapp,
+    tipoAnuncio,
+    servidor,
+    quantidade,
+    valor,
+    printNome:print.name,
+    observacao,
+    duracaoDias:duracao,
+    precoPlano:precoPlano(duracao),
+    comprovantePixNome:comprovantePix.name,
+    status:"Pendente",
+    atualizacaoOfertas:"Todos os dias às 5h AM",
+    regra:"Print obrigatório com histórico do char e TC comprada pelo Market. Não aceitar TC recebida de player."
+  });
+}
 </script>
 
 </body>
