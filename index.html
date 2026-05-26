@@ -67,6 +67,7 @@ input:focus,select:focus,textarea:focus{border-color:#f59e0b}
 .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
 .modal-head h2{color:#fbbf24}
 .close{background:#1f2937;color:#fff;border:1px solid rgba(255,255,255,.15);padding:8px 12px;border-radius:10px}
+.user-status{font-size:13px;color:#86efac;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);padding:8px 11px;border-radius:999px;display:none}
 footer{max-width:1180px;margin:40px auto 0;padding:28px 20px;border-top:1px solid rgba(255,255,255,.08);color:#64748b;text-align:center}
 @media(max-width:950px){.hero h1{font-size:42px}.stats,.plans{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.nav{flex-direction:column;align-items:flex-start}.hero{padding:24px 14px}.hero-card{padding:28px 20px;border-radius:22px}.hero h1{font-size:34px}.stats,.plans{grid-template-columns:1fr}.section-head{flex-direction:column;align-items:flex-start}.btn,button{width:100%}.modal-box{padding:18px}}
@@ -81,11 +82,14 @@ footer{max-width:1180px;margin:40px auto 0;padding:28px 20px;border-top:1px soli
       <span class="brand-icon">TC</span>
       <span>Tibia Mural</span>
     </a>
+
     <div class="nav-links">
       <a href="#inicio">Ofertas</a>
-      <button onclick="abrirModal('modalLogin')">Login</button>
-      <button onclick="abrirModal('modalCadastro')">Cadastro</button>
-      <button onclick="abrirModal('modalAnuncio')">Anunciar</button>
+      <span id="userStatus" class="user-status"></span>
+      <button id="btnLogin" onclick="abrirModal('modalLogin')">Login</button>
+      <button id="btnCadastro" onclick="abrirModal('modalCadastro')">Cadastro</button>
+      <button onclick="abrirAnuncio()">Anunciar</button>
+      <button id="btnSair" style="display:none;" onclick="sair()">Sair</button>
     </div>
   </nav>
 </header>
@@ -94,9 +98,9 @@ footer{max-width:1180px;margin:40px auto 0;padding:28px 20px;border-top:1px soli
   <div class="hero-card">
     <span class="badge">Mural brasileiro de Tibia Coins</span>
     <h1>Ofertas ativas de <span>TC</span> em destaque.</h1>
-    <p>A página inicial mostra apenas as ofertas e anúncios ativos. Cada anúncio aprovado ficará visível pelo tempo escolhido: 5 dias, 7 dias ou 30 dias. As ofertas serão atualizadas todos os dias às 5h AM.</p>
+    <p>A página inicial mostra apenas as ofertas e anúncios ativos. Para anunciar, a pessoa precisa criar conta e fazer login. Cada anúncio aprovado ficará visível pelo tempo escolhido: 5 dias, 7 dias ou 30 dias.</p>
     <div class="actions">
-      <button class="btn-primary" onclick="abrirModal('modalAnuncio')">Criar anúncio</button>
+      <button class="btn-primary" onclick="abrirAnuncio()">Criar anúncio</button>
       <button class="btn-secondary" onclick="abrirModal('modalLogin')">Entrar</button>
       <button class="btn-warning" onclick="abrirModal('modalCadastro')">Criar conta</button>
     </div>
@@ -148,7 +152,7 @@ footer{max-width:1180px;margin:40px auto 0;padding:28px 20px;border-top:1px soli
     </div>
 
     <div class="form-card">
-      <p>Entre para gerenciar seus anúncios.</p>
+      <p>Entre para criar e gerenciar seus anúncios.</p>
 
       <label>Email</label>
       <input id="loginEmail" type="email" placeholder="seuemail@email.com">
@@ -170,7 +174,7 @@ footer{max-width:1180px;margin:40px auto 0;padding:28px 20px;border-top:1px soli
     </div>
 
     <div class="form-card">
-      <p>Crie sua conta para enviar anúncios.</p>
+      <p>Crie sua conta para poder enviar anúncios.</p>
 
       <label>Nome</label>
       <input id="cadNome" type="text" placeholder="Ex: Servel">
@@ -265,36 +269,87 @@ footer{max-width:1180px;margin:40px auto 0;padding:28px 20px;border-top:1px soli
 <script>
 const SCRIPT_URL = "COLE_AQUI_O_LINK_DO_APPS_SCRIPT";
 
-function abrirModal(id){document.getElementById(id).classList.add("active")}
-function fecharModal(id){document.getElementById(id).classList.remove("active")}
+let usuarioLogado = false;
+let usuarioAtual = null;
 
-function limparZap(zap){return zap.replace(/\D/g,"")}
+function abrirModal(id){
+  document.getElementById(id).classList.add("active");
+}
+
+function fecharModal(id){
+  document.getElementById(id).classList.remove("active");
+}
+
+function limparZap(zap){
+  return zap.replace(/\D/g,"");
+}
+
+function atualizarInterfaceUsuario(){
+  const userStatus = document.getElementById("userStatus");
+  const btnLogin = document.getElementById("btnLogin");
+  const btnCadastro = document.getElementById("btnCadastro");
+  const btnSair = document.getElementById("btnSair");
+
+  if(usuarioLogado){
+    userStatus.style.display = "inline-block";
+    userStatus.textContent = "Logado: " + usuarioAtual;
+    btnLogin.style.display = "none";
+    btnCadastro.style.display = "none";
+    btnSair.style.display = "inline-block";
+  } else {
+    userStatus.style.display = "none";
+    btnLogin.style.display = "inline-block";
+    btnCadastro.style.display = "inline-block";
+    btnSair.style.display = "none";
+  }
+}
 
 function precoPlano(duracao){
-  if(duracao==="5") return "R$ 2,00";
-  if(duracao==="7") return "R$ 8,00";
-  if(duracao==="30") return "R$ 30,00";
+  if(duracao === "5") return "R$ 2,00";
+  if(duracao === "7") return "R$ 8,00";
+  if(duracao === "30") return "R$ 30,00";
   return "R$ 0,00";
 }
 
 function atualizarPlano(){
-  const duracao=document.getElementById("anDuracao").value;
-  const quantidade=Number(document.getElementById("anQuantidade").value||0);
-  if(duracao==="5" && quantidade>0 && quantidade<250){
+  const duracao = document.getElementById("anDuracao").value;
+  const quantidade = Number(document.getElementById("anQuantidade").value || 0);
+
+  if(duracao === "5" && quantidade > 0 && quantidade < 250){
     alert("O plano de 5 dias por R$ 2,00 é apenas para anúncios com 250 TC ou mais.");
-    document.getElementById("anDuracao").value="7";
+    document.getElementById("anDuracao").value = "7";
   }
 }
 
+function abrirAnuncio(){
+  if(!usuarioLogado){
+    alert("Para criar um anúncio, primeiro faça login ou crie uma conta.");
+    abrirModal("modalLogin");
+    return;
+  }
+
+  abrirModal("modalAnuncio");
+}
+
+function sair(){
+  usuarioLogado = false;
+  usuarioAtual = null;
+  atualizarInterfaceUsuario();
+  alert("Você saiu da conta.");
+}
+
 async function enviarParaPlanilha(dados){
-  if(SCRIPT_URL==="COLE_AQUI_O_LINK_DO_APPS_SCRIPT"){
+  if(SCRIPT_URL === "COLE_AQUI_O_LINK_DO_APPS_SCRIPT"){
     alert("Site pronto visualmente. Depois vamos conectar com o Apps Script da planilha.");
     return;
   }
 
   try{
-    const resposta=await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify(dados)});
-    const resultado=await resposta.json();
+    const resposta = await fetch(SCRIPT_URL,{
+      method:"POST",
+      body:JSON.stringify(dados)
+    });
+    const resultado = await resposta.json();
     alert(resultado.mensagem || "Enviado com sucesso!");
   }catch(e){
     alert("Erro ao enviar. Verifique o link do Apps Script.");
@@ -302,47 +357,81 @@ async function enviarParaPlanilha(dados){
 }
 
 function criarConta(){
-  const nome=document.getElementById("cadNome").value.trim();
-  const email=document.getElementById("cadEmail").value.trim();
-  const whatsapp=limparZap(document.getElementById("cadZap").value);
-  const senha=document.getElementById("cadSenha").value.trim();
+  const nome = document.getElementById("cadNome").value.trim();
+  const email = document.getElementById("cadEmail").value.trim();
+  const whatsapp = limparZap(document.getElementById("cadZap").value);
+  const senha = document.getElementById("cadSenha").value.trim();
 
   if(!nome || !email || !whatsapp || !senha){
     alert("Preencha todos os campos para criar conta.");
     return;
   }
 
-  enviarParaPlanilha({tipo:"cadastro",nome,email,whatsapp,senha});
+  usuarioLogado = true;
+  usuarioAtual = email;
+  atualizarInterfaceUsuario();
+  fecharModal("modalCadastro");
+
+  enviarParaPlanilha({
+    tipo:"cadastro",
+    nome,
+    email,
+    whatsapp,
+    senha
+  });
+
+  alert("Conta criada. Agora você pode anunciar.");
 }
 
 function login(){
-  alert("Login visual criado. Depois vamos validar email e senha pela planilha.");
+  const email = document.getElementById("loginEmail").value.trim();
+  const senha = document.getElementById("loginSenha").value.trim();
+
+  if(!email || !senha){
+    alert("Preencha email e senha para entrar.");
+    return;
+  }
+
+  usuarioLogado = true;
+  usuarioAtual = email;
+
+  atualizarInterfaceUsuario();
+  fecharModal("modalLogin");
+
+  alert("Login realizado. Agora você pode criar anúncio.");
 }
 
 function criarAnuncio(){
-  const nome=document.getElementById("anNome").value.trim();
-  const whatsapp=limparZap(document.getElementById("anZap").value);
-  const tipoAnuncio=document.getElementById("anTipo").value;
-  const servidor=document.getElementById("anServidor").value.trim();
-  const quantidade=document.getElementById("anQuantidade").value.trim();
-  const valor=document.getElementById("anValor").value.trim();
-  const print=document.getElementById("anPrint").files[0];
-  const observacao=document.getElementById("anObs").value.trim();
-  const duracao=document.getElementById("anDuracao").value;
-  const comprovantePix=document.getElementById("anComprovantePix").files[0];
+  if(!usuarioLogado){
+    alert("Para enviar anúncio, faça login primeiro.");
+    abrirModal("modalLogin");
+    return;
+  }
+
+  const nome = document.getElementById("anNome").value.trim();
+  const whatsapp = limparZap(document.getElementById("anZap").value);
+  const tipoAnuncio = document.getElementById("anTipo").value;
+  const servidor = document.getElementById("anServidor").value.trim();
+  const quantidade = document.getElementById("anQuantidade").value.trim();
+  const valor = document.getElementById("anValor").value.trim();
+  const print = document.getElementById("anPrint").files[0];
+  const observacao = document.getElementById("anObs").value.trim();
+  const duracao = document.getElementById("anDuracao").value;
+  const comprovantePix = document.getElementById("anComprovantePix").files[0];
 
   if(!nome || !whatsapp || !tipoAnuncio || !servidor || !quantidade || !valor || !print || !comprovantePix){
     alert("Preencha todos os campos obrigatórios, envie o print e o comprovante do Pix.");
     return;
   }
 
-  if(duracao==="5" && Number(quantidade)<250){
+  if(duracao === "5" && Number(quantidade) < 250){
     alert("O plano de 5 dias por R$ 2,00 exige anúncio de 250 TC ou mais.");
     return;
   }
 
   enviarParaPlanilha({
     tipo:"anuncio",
+    usuario:usuarioAtual,
     nome,
     whatsapp,
     linkWhatsapp:"https://wa.me/"+whatsapp,
@@ -360,6 +449,8 @@ function criarAnuncio(){
     regra:"Print obrigatório com histórico do char e TC comprada pelo Market. Não aceitar TC recebida de player."
   });
 }
+
+atualizarInterfaceUsuario();
 </script>
 
 </body>
